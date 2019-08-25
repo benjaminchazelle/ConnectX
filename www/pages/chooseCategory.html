@@ -1,0 +1,91 @@
+<md-content ng-controller="ChosseCategoryController" class="md-padding">
+
+	<h3 class="md-headline" style="text-align: center; margin: 0;" ng-if="mode == 'loan'">
+		Décriver l'objet que vous souhaitez ajouter
+	</h3>
+
+	<h3 class="md-headline" style="text-align: center; margin: 0;" ng-if="mode == 'request'">
+		De quoi avez vous besoin ?
+	</h3>
+
+	<div layout="row">
+
+		<div flex layout="column">
+
+			<md-card ng-click="chooseCategory('Imprimante')">
+				<md-card-title>
+					<md-card-title-text>
+						<span class="md-headline">
+							Imprimante
+						</span>
+					</md-card-title-text>
+				</md-card-title>
+			</md-card>
+
+			<md-card ng-click="chooseCategory('Chargeur')">
+				<md-card-title>
+					<md-card-title-text>
+						<span class="md-headline">
+							Chargeur
+						</span>
+					</md-card-title-text>
+				</md-card-title>
+			</md-card>
+
+			<md-card flex ng-click="chooseCategory('Matériel audio')">
+				<md-card-title>
+					<md-card-title-text>
+						<span class="md-headline">
+							Matériel audio
+						</span>
+					</md-card-title-text>
+				</md-card-title>
+			</md-card>
+
+		</div>
+
+		<div flex layout="column">
+
+			<md-card flex ng-click="chooseCategory('Câble/adaptateur')">
+				<md-card-title>
+					<md-card-title-text>
+						<span class="md-headline">
+							Câble ou Adapteur
+						</span>
+					</md-card-title-text>
+				</md-card-title>
+			</md-card>
+
+			<md-card ng-click="chooseCategory('Batterie')">
+				<md-card-title>
+					<md-card-title-text>
+						<span class="md-headline">
+							Batterie
+						</span>
+					</md-card-title-text>
+				</md-card-title>
+			</md-card>
+
+			<md-card ng-click="chooseCategory('Autre')">
+				<md-card-title>
+					<md-card-title-text>
+						<span class="md-headline">
+							Autre
+						</span>
+					</md-card-title-text>
+				</md-card-title>
+			</md-card>
+
+		</div>
+
+	</div>
+
+	<div layout="row"  ng-if="mode == 'request'">
+		<div flex></div>
+		<md-switch ng-model="$parent.emergency" aria-label="Mode urgence">
+			Mode urgence
+		</md-switch>
+		<div flex></div>
+	</div>
+
+</md-content>

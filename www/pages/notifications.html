@@ -1,0 +1,41 @@
+
+<div ng-controller="notificationsController" ng-cloak >
+	<md-content class="md-padding" layout="column">
+
+		<h3 class="md-headline" style="text-align: center; margin: 0;">
+			Notifications
+		</h3>
+
+		<div layout="column" ng-repeat="demande in getNotifications()">
+
+			<div layout="row" layout-align="start center" style="padding:5px 0">
+
+				<div flex>
+					<div style="margin:0 0  0 0;"  ng-if="$root.data.objets[demande.idObjet].nom != null">
+						<md-icon md-svg-icon="{{$root.data.objets[demande.idObjet].image}}"></md-icon>
+						<b>{{$root.data.objets[demande.idObjet].nom}}</b>
+					</div>
+					<div style="margin:0 0  0 0;"  ng-if="$root.data.objets[demande.idObjet].nom == null">
+						<md-icon md-svg-icon="img/icons/ic_announcement.svg"></md-icon>
+						<b>{{demande.nomObjet}} [URGENT]</b>
+					</div>
+					<div style="margin:0 0  2px 32px;">{{demande.distance}}</div>
+					<div style="margin:0 0  2px 32px;">{{demande.dateDemande}} - {{demande.heureDemande}}</div>
+				</div>
+				<div>
+					<md-button class="md-icon-button" aria-label="Accept" ng-href="#!/detail-echange?idDemande={{demande.id}}">
+						<md-icon md-svg-icon="img/icons/eye_black.svg" id="check"></md-icon>
+					</md-button>
+					<md-button class="md-icon-button" aria-label="Refuse" ng-click="showRefuse($event,demande.id)">
+						<md-icon md-svg-icon="img/icons/close.svg" id="refuse"></md-icon>
+					</md-button>
+				</div>
+			</div>
+
+			<md-divider ng-if="!$last"></md-divider>
+		</div>
+
+		<div ng-if="getNotifications().length === 0" style="text-align:center;">Aucune notifcation en attente</div>
+	</div>
+</md-content>
+</div>

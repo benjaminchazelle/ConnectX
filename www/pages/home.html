@@ -1,0 +1,107 @@
+
+<div ng-controller="HomeController">
+
+	<h1 style="text-align:center">Bienvenue !</h1>
+
+	<div ng-cloak>
+		<md-content>
+			<md-tabs md-dynamic-height md-stretch-tabs="yes" md-border-bottom>
+				<md-tab label="Mes demandes">
+					<md-content style="margin-bottom:80px;">
+
+						<div layout="column" ng-repeat="demande in $root.data.demandes | filter:{'idDemandeur': 0}:true  | orderBy:'-'" style="margin: 5px 0;border-bottom:1px solid #ddd;padding: 5px;">
+
+							<div layout="row" layout-align="start center">
+								<md-icon ng-click="about(demande)" md-svg-src="img/icons/call_received.svg" class="s24" aria-label="Demander"></md-icon>
+								<div flex ng-click="about(demande)">
+									<b>
+										{{$root.data.objets[demande.idObjet].nom || demande.nomObjet}}
+									</b>
+								</div>
+								<div layout="column" style="width:100px;">
+									<div>{{demande.dateDemande}}</div>
+								</div>
+							</div>
+							<div layout="row">
+								<div flex ng-click="about(demande)">
+									<div>Statut : {{demande.statut}}</div>
+									<div flex style="color: #888;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+										<i ng-if="demande.idProprietaire != null">Prêt de {{$root.data.profil[demande.idProprietaire].nom}}</i>
+										<i ng-if="demande.idProprietaire == null">Nous cherchons votre héros...</i>
+									</div>
+								</div>
+								<div layout="column" layout-align="space-around center" style="width:100px;">
+									<md-button ng-click="chat(demande)" class="md-icon-button" ng-if="demande.statut == 'acceptée'">
+										<md-icon md-svg-src="img/icons/chat.svg" class="s24" aria-label="Demander"></md-icon>
+									</md-button>
+									<md-button ng-click="about(demande)" class="md-icon-button" ng-if="demande.statut == 'en attente'">
+										<md-icon md-svg-src="img/icons/ic_query_builder_black_24px.svg" class="s24" aria-label="Voir demande"></md-icon>
+									</md-button>
+									<md-button ng-click="about(demande)" class="md-icon-button" ng-if="demande.statut == 'terminée'">
+										<md-icon md-svg-src="img/icons/check.svg" class="s24" aria-label="Voir demande"></md-icon>
+									</md-button>
+									<md-button ng-click="about(demande)" class="md-icon-button" ng-if="demande.statut == 'refusée'">
+										<md-icon md-svg-src="img/icons/close.svg" class="s24" aria-label="Voir demande"></md-icon>
+									</md-button>
+								</div>
+							</div>
+						</div>
+
+					</md-content>
+				</md-tab>
+				<md-tab label="Mes prêts">
+					<md-content style="margin-bottom:80px;">
+						<div layout="column" ng-repeat="demande in $root.data.demandes | filter:{'idProprietaire': 0}:true" style="margin: 5px 0;border-bottom:1px solid #ddd;padding: 5px;">
+							<div layout="row" layout-align="start center">
+								<md-icon ng-click="about(demande)" md-svg-src="img/icons/call_made.svg" class="s24" aria-label="Demander"></md-icon>
+								<div ng-click="about(demande)" flex>
+									<b>
+										{{$root.data.objets[demande.idObjet].nom}}
+									</b>
+								</div>
+								<div layout="column" style="width:100px;">
+									<div>{{demande.dateDemande}}</div>
+								</div>
+							</div>
+							<div layout="row">
+								<div ng-click="about(demande)" flex>
+									<div>Statut : {{demande.statut}}</div>
+									<div flex style="color: #888;white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+										<i>Prêt à {{$root.data.profil[demande.idDemandeur].nom}}</i>
+									</div>
+								</div>
+								<div layout="column" layout-align="space-around center" style="width:100px;">
+									<md-button ng-click="chat(demande)" class="md-icon-button" ng-if="demande.statut == 'acceptée'">
+										<md-icon md-svg-src="img/icons/chat.svg" class="s24" aria-label="Demander"></md-icon>
+									</md-button>
+									<md-button ng-click="about(demande)" class="md-icon-button" ng-if="demande.statut == 'en attente'">
+										<md-icon  md-svg-src="img/icons/ic_query_builder_black_24px.svg" class="s24" aria-label="Voir demande"></md-icon>
+									</md-button>
+									<md-button ng-click="about(demande)" class="md-icon-button" ng-if="demande.statut == 'terminée'">
+										<md-icon md-svg-src="img/icons/check.svg" class="s24" aria-label="Voir demande"></md-icon>
+									</md-button>
+									<md-button ng-click="about(demande)" class="md-icon-button" ng-if="demande.statut == 'refusée'">
+										<md-icon md-svg-src="img/icons/close.svg" class="s24" aria-label="Voir demande"></md-icon>
+									</md-button>
+								</div>
+							</div>
+						</div>
+
+					</md-content>
+				</md-tab>
+			</md-tabs>
+		</md-content>
+	</div>
+
+	<div style="background:white; position:fixed; bottom: 0;right: 0;left:0;padding:10px;" layout="row" layout-align="center center" style="margin-top:10px; margin-bottom:10px" >
+		<md-button flex ng-click="ajouterObjet()" class="md-raised md-primary" style="width:120px;">
+			<md-icon md-svg-icon="img/icons/call_made_white.svg"></md-icon>
+			Prêter
+		</md-button>
+		<md-button flex ng-click="demander()" class="md-raised md-primary" style="width:120px;">
+			<md-icon md-svg-icon="img/icons/call_received_white.svg"></md-icon>
+			Demander
+		</md-button>
+	</div>
+
+</div>

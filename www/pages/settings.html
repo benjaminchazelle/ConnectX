@@ -1,0 +1,40 @@
+<div ng-cloak>
+
+	<div  class="md-padding">
+		<h3 class="md-headline" style="text-align: center; margin: 0;">
+			Paramètres
+		</h3>
+	</div>
+
+	<md-list>
+
+		<md-subheader class="md-no-sticky"> Préférences globales </md-subheader>
+
+		<md-list-item>
+			<p> Notifications par e-mail </p>
+			<md-checkbox class="md-secondary" ng-model="$root.data.settings.notifEmail"></md-checkbox>
+		</md-list-item>
+		<md-list-item>
+			<p> Mode urgence activé par défaut </p>
+			<md-checkbox class="md-secondary" ng-model="$root.data.settings.modeUrgence"></md-checkbox>
+		</md-list-item>
+
+		<md-divider></md-divider>
+
+		<md-subheader class="md-no-sticky"> Son </md-subheader>
+
+		<md-list-item>
+			<md-slider-container flex ng-disabled="$root.data.settings.alarmDisabled">
+				<md-icon md-svg-icon="img/icons/alarm_black.svg"></md-icon>
+				<md-slider ng-model="$root.data.settings.alarmVolume" aria-label="Disabled 1" md-discrete ng-readonly="readonly"></md-slider>
+			</md-slider-container>
+		</md-list-item>
+
+		<md-list-item>
+			<p> Désactiver le son </p>
+			<md-checkbox class="md-secondary" ng-model="$root.data.settings.alarmDisabled"></md-checkbox>
+		</md-list-item>
+
+	</md-list>
+
+</div>

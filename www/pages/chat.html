@@ -1,0 +1,117 @@
+<style>
+.subheaderdemoBasicUsage .face {
+	border-radius: 30px;
+	border: 1px solid #ddd;
+	width: 48px;
+	margin: 16px; }
+
+	.center{
+		text-align: center;
+	}
+
+	.scroll{
+		overflow-y: auto;
+	}
+
+	.inputZone{
+		height: 50px;
+	}
+
+	.no-md-errors-spacer{
+		margin: 15px 0 0;
+	}
+
+	.no-md-errors-spacer .md-errors-spacer{
+		display: none;
+	}
+	.message-text-event{
+		font-size: 16px;
+		font-weight: bold;
+		color: #2196ff;
+		margin: 5px 10px;
+	}
+
+	.message-text-blue{
+		font-size: 16px;
+		color: white;
+		margin-top: 2px;
+		margin-left: 4px;
+	}
+
+	.message-text-grey{
+		font-size: 16px;
+		color: black;
+		margin-top: 2px;
+		margin-left: 4px;
+	}
+
+	.blueColor{
+		background-color: #0084ff;
+	}
+
+	.eventColor{
+		background-color: #666699;
+	}
+
+	.lightGreyColor{
+		background-color: #dfe3ee;
+	}
+</style>
+
+<div ng-controller="BottomSheetExample" ng-cloak>
+	<md-toolbar style="position: fixed; top: 56px; background-color: white; color: black; box-shadow: 0 4px 4px #e0e0e0;" class="">
+		<div layout="row" class="md-toolbar-tools">
+			<div style="width:24px;"></div>
+			<div class="center" flex>{{profilOwner.nom}}</div>
+			<div style="width:24px;" ng-click="openDetails()">
+				<md-icon md-svg-src="img/icons/info_black.svg" aria-label="Message"></md-icon>
+			</div>
+		</div>
+	</md-toolbar>
+
+	<div style="position: fixed; top: 112px; bottom: 100px;" class="messageZone scroll md-padding">
+
+		<div ng-repeat="message in demande.chat">
+			<div style="text-align:left" ng-if="message.type == 'owner'">
+				<div layout-align="start" layout="row">
+					<md-card class="lightGreyColor md-padding" style="width: 66%">
+						<span class="message-text-grey">{{message.content}}</span>
+					</md-card>
+				</div>
+			</div>
+
+			<div style="text-align:left" ng-if="message.type == 'requester'">
+				<div layout-align="end" layout="row">
+					<md-card class="blueColor md-padding" style="width: 66%">
+						<span class="message-text-blue">{{message.content}}</span>
+					</md-card>
+				</div>
+			</div>
+
+			<div style="text-align:center" ng-if="message.type == 'center'">
+				<div layout-align="center" layout="row">
+					<span class="message-text-event center" ng-if="message.content=='start'">Demande de prêt {{objet.nom}} par {{profilRequester.nom}} le {{demande.dateDemande}} à {{demande.heureDemande}}</span>
+					<span class="message-text-event center" ng-if="message.content=='end'">Demande de prêt {{objet.nom}} par {{profilRequester.nom}} acceptée le {{demande.dateDebut}}</span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div style="position: fixed; bottom: 0px; height: 100px; width: 100%; background-color: white; z-index: 10; box-shadow: 0 -2px 2px #e0e0e0;">
+		<div layout="row" style="margin: 0 5px;">
+			<md-input-container class="md-block no-md-errors-spacer" flex>
+				<label>Entrez un message</label>
+				<input ng-model="message">
+			</md-input-container>
+			<md-button class="md-icon-button" aria-label="Send a message" style="align-self: center;" ng-click="addMessage()">
+				<md-icon md-svg-src="img/icons/send_message.svg" aria-label="Message"></md-icon>
+			</md-button>
+		</div>
+		<div layout="row">
+			<md-button flex class="md-raised md-primary" layout-align="bottom center" ng-click="showGridBottomSheet()"  aria-label="ActionEnAttente">
+				<md-icon md-svg-src="img/icons/validation_notification.svg" class="s24" aria-label="ActionEnAttente"></md-icon>
+				1 action en attente
+			</md-button>
+		</div>
+	</div>
+</div>

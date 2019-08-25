@@ -1,0 +1,28 @@
+<md-bottom-sheet class="md-grid" layout="column">
+	<div layout="column" layout-align="start center">
+		<div layout="row" layout-align="center center" ng-cloak>
+			<h4 ng-if="demandeStatut=='en attente'" style="text-align: center;">Accepter la demande de prêt de {{objet.nom}} du {{demande.dateDebut}} au {{demande.dateFin}} ?</h4>
+			<h4 ng-if="demandeStatut=='acceptée'" style="text-align: center;">Valider le retour de prêt de {{objet.nom}} ?</h4>
+		</div>
+		<div layout="row" layout-align="center center" style="margin-top:10px; margin-bottom:10px" ng-if="demandeStatut == 'en attente'">
+			<md-button ng-click="hide();refuserDemande();" class="md-raised" style="background-color:#e53935;color:white;width:120px;">
+				<md-icon md-svg-icon="img/icons/close_white.svg"></md-icon>
+				Refuser
+			</md-button>
+			<md-button ng-click="hide();accepterDemande();" class="md-raised" style="background-color:#43a047;color:white;width:120px;">
+				<md-icon md-svg-icon="img/icons/check_white.svg"></md-icon>
+				Accepter
+			</md-button>
+		</div>
+		<div layout="row" layout-align="center center" style="margin-top:10px; margin-bottom:10px" ng-if="demandeStatut == 'acceptée'">
+			<md-button ng-click="hide();" class="md-raised" style="width:120px;">
+				<md-icon md-svg-icon="img/icons/ic_expand_more_black_24px.svg"></md-icon>
+				Fermer
+			</md-button>
+			<md-button ng-click="hide();terminerDemande();" class="md-raised md-primary" style="width:120px;">
+				<md-icon md-svg-icon="img/icons/check_white.svg"></md-icon>
+				Terminer
+			</md-button>
+		</div>
+	</div>
+</md-bottom-sheet>

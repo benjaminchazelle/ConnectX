@@ -1,0 +1,87 @@
+<div ng-controller="ProfilController" ng-cloak >
+	<div class="md-padding" layout-xs="column" layout="row">
+
+		<md-card md-theme="default" md-theme-watch class="md-padding">
+			<div layout="row" layout-align="space-between center">
+				<div class="md-headline" style="line-height:24px;">{{$root.data.profil[0].nom}}</div>
+			</div>
+			<div layout="row" layout-align="space-between center">
+
+				<div layout="column" layout-align="start start">
+					<div class="md-subhead" flex ng-click="changeInformation()" >
+						{{$root.data.profil[0].infos}}
+						<md-icon md-svg-icon="img/icons/ic_mode_edit_black_24px.svg"></md-icon>
+					</div>
+				</div>
+				<div>
+					<img src="{{$root.data.profil[0].avatar}}" onclick="browseFileSystem(this, 'chooseImage')" style="margin-top:0;border-radius: 64px;width:128px;height:128px;" />
+				</div>
+
+			</div>
+		</md-card>
+
+		<div layout="row">
+			<h2 class="md-toolbar-tools">Mes objets</h2>
+			<div flex></div>
+			<div>
+				<md-button href="/#!/choose-category?mode=loan" class="md-raised md-primary" aria-label="Editer">
+					<md-icon md-svg-icon="img/icons/ic_add_white_24px.svg"></md-icon>
+					Ajouter
+				</md-button>
+			</div>
+		</div>
+
+		<md-content>
+			<md-list>
+				<md-list-item class="md-3-line" ng-repeat="item in $root.data.objets | filter:{'idProprietaire': 0}:true">
+					<img ng-src="{{item.image}}" class="md-avatar">
+
+					<div class="md-list-item-text" layout="column">
+						<div layout="row" layout="row">
+							<div flex>
+								<p><b>{{item.nom}}</b></p>
+								<p>En ligne depuis le {{item.dateMiseEnLigne}}</p>
+								<p>{{item.nbPrets}} prêts</p>
+							</div>
+
+							<div flex="nogrow">
+								<md-menu class="md-secondary">
+									<md-button class="md-icon-button" aria-label="More">
+										<md-icon md-svg-icon="img/icons/more_vert_black.svg"></md-icon>
+									</md-button>
+
+									<md-menu-content width="4">
+										<md-menu-item>
+											<md-button ng-href="#!/product-details?id={{item.id}}">
+												<md-icon md-svg-icon="img/icons/eye_black.svg"></md-icon>
+												Détails
+											</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button ng-href="#!/edit-produit?idProduit={{item.id}}">
+												<md-icon md-svg-icon="img/icons/mode_edit_black.svg"></md-icon>
+												Modifier
+											</md-button>
+										</md-menu-item>
+										<md-menu-item>
+											<md-button ng-click="deleteObject($event, item)">
+												<md-icon md-svg-icon="img/icons/delete_forever_black.svg"></md-icon>
+												Supprimer
+											</md-button>
+										</md-menu-item>
+									</md-menu-content>
+								</md-menu>
+							</div>
+
+						</div>
+					</div>
+
+					<md-divider md-inset ng-if="!$last"></md-divider>
+
+				</md-list-item>
+
+			</md-list>
+		</md-content>
+
+	</div>
+</div>

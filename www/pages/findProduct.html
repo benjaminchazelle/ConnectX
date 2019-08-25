@@ -1,0 +1,81 @@
+<md-content ng-controller="FindProductController">
+
+	<style>
+	.md-no-errors-spacer .md-errors-spacer {
+		display:none;
+	}
+
+	.md-chips-no-border .md-chips {
+		box-shadow:unset !important;
+	}
+
+	.no-margin-button {
+		padding:0 !important;
+		margin:0 !important;
+	}
+
+	.no-margin-button .md-icon {
+	}
+	</style>
+
+	<h3 class="md-headline md-padding" style="text-align: center; margin: 0;" >
+		Trouver votre matériel
+	</h3>
+
+	<div>
+		<div layout="row" layout-align="start end">
+			<md-input-container flex style="margin-bottom:0;margin-left:8px;" class="md-no-errors-spacer">
+				<label>Recherche</label>
+				<input ng-model="query" type="text" />
+			</md-input-container>
+			<md-button class="md-icon-button no-margin-button">
+				<md-icon md-svg-icon="img/icons/settings.svg"></md-icon>
+			</md-button>
+		</div>
+
+		<div layout="row" layout-align="start">
+
+			<div ng-repeat="f in filters()" style="margin:0 8px;">
+				<md-chips class="md-chips-no-border">
+					<md-chip style="margin:8px 0 0;white-space: nowrap;overflow:hidden;font-size:14px;">{{f}}</md-chip>
+				</md-chips>
+			</div>
+
+
+		</div>
+	</div>
+	<md-list style="margin:0 5px;">
+		<md-list-item class="md-3-line" style="border-bottom:1px solid #ddd;" ng-repeat="object in search()">
+			<img style="width:64px;height:auto;" ng-src="{{object.photo}}" class="md-avatar" />
+			<div class="md-list-item-text" ng-class="md-offset">
+				<h3>{{object.nom}}</h3>
+				<h4>Prêter par {{getUserById(object.idProprietaire).nom}}</h4>
+				<p>
+					{{randomDistance[$index]}} -
+					<span ng-if="object.prix == 0">Gratuit </span>
+					<span ng-if="object.prix != 0">{{object.prix}}{{object.devise}}{{object.prixType}}</span>
+				</p>
+			</div>
+			<md-button ng-click="requestFor(object, randomDistance[$index] )" class="md-secondary md-icon-button" aria-label="call">
+				<md-icon md-svg-icon="img/icons/ic_forward_black_24px.svg"></md-icon>
+			</md-button>
+		</md-list-item>
+	</md-list>
+
+	<div ng-if="search().length == 0">
+		<h4 style="text-align: center; margin: 30px 0 20px;" >
+			Pas de résultats pour "{{query}}"
+		</h4>
+		<br />
+		<div layout="row">
+			<div flex></div>
+			<md-button ng-click="broadcast()" class="md-primary md-raised">
+				<md-icon md-svg-icon="img/icons/send.svg"></md-icon>
+				&nbsp;
+				Diffuser la demande
+			</md-button>
+			<div flex></div>
+		</div>
+	</div>
+
+</md-content>

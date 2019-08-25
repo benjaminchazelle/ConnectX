@@ -1,0 +1,74 @@
+<div ng-controller="MenuController" ng-cloak layout="column">
+
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<md-button class="md-icon-button" aria-label="Sidenav menu" ng-click="$parent.closeSidenav()">
+				<md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
+			</md-button>
+
+			<h2 flex md-truncate>ConnectX</h2>
+		</div>
+	</md-toolbar>
+
+
+	<div layout="row" layout-align="center center">
+		<img src="{{$root.data.profil[0].avatar}}" style="margin-top:10px;border-radius: 64px;width:128px;height:128px;" />
+	</div>
+
+	<div style="text-align:center;">
+		<div class="md-headline">{{$root.data.profil[0].nom}}</div>
+		<div class="md-subhead">{{$root.data.profil[0].email}}</div>
+	</div>
+	<md-menu-content width="4">
+
+		<md-menu-item>
+			<md-button ng-click="closeMenu()" ng-href="#!/home">
+				<md-icon md-svg-src="img/icons/home_black.svg" class="s24" aria-label="Accueil"></md-icon>
+				Accueil
+			</md-button>
+		</md-menu-item>
+		<md-menu-divider></md-menu-divider>
+
+		<md-menu-item>
+			<md-button ng-click="closeMenu()" ng-href="#!/choose-category?mode=loan">
+				<md-icon md-svg-src="img/icons/call_made.svg" class="s24" aria-label="Prêter"></md-icon>
+				Prêter
+			</md-button>
+		</md-menu-item>
+		<md-menu-divider></md-menu-divider>
+
+		<md-menu-item>
+			<md-button ng-click="closeMenu()" ng-href="#!/choose-category?mode=request">
+				<md-icon md-svg-src="img/icons/call_received.svg" class="s24" aria-label="Demander"></md-icon>
+				Demander
+			</md-button>
+		</md-menu-item>
+		<md-menu-divider></md-menu-divider>
+
+		<md-menu-item>
+			<md-button ng-click="closeMenu()" ng-href="#!/profil">
+				<md-icon md-svg-src="img/icons/person.svg" class="s24" aria-label="Profil"></md-icon>
+				Profil / Mes objets
+			</md-button>
+		</md-menu-item>
+		<md-menu-divider></md-menu-divider>
+
+		<md-menu-item>
+			<md-button ng-href="#!/settings">
+				<md-icon md-svg-src="img/icons/settings.svg" class="s24" aria-label="Paramètres"></md-icon>
+				Paramètres
+			</md-button>
+		</md-menu-item>
+		<md-menu-divider></md-menu-divider>
+
+		<md-menu-item>
+			<md-button ng-href="#!/faq">
+				<md-icon md-svg-src="img/icons/live_help.svg" class="s24" aria-label="FAQ"></md-icon>
+				FAQ
+			</md-button>
+		</md-menu-item>
+		<md-menu-divider></md-menu-divider>
+
+	</md-menu-content>
+
+</div>

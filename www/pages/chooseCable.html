@@ -1,0 +1,93 @@
+<style>
+md-list.scrollable{
+	min-height: 200px;
+	max-height: 260px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background-color: #efefef;
+}
+hr {
+	border: 0;
+	border-top: 3px solid rgb(33,150,243);
+	margin: 1em 0;
+}
+
+.no-md-errors-spacer .md-errors-spacer{
+	display: none;
+}
+
+.selectionnableEmbout {
+	border: 2px solid;
+	padding: 10px 0 5px;
+	border-radius: 40px;
+	border-color: transparent;
+	transition: border-color 0.4s;
+}
+
+.selectedEmbout {
+	border-color: rgb(33,150,243);
+}
+
+</style>
+
+<div ng-controller="ChooseCableController" ng-cloak >
+
+	<div class="md-padding">
+		<h3 class="md-headline" style="text-align: center; margin: 0;">
+			Choisissez votre câble
+		</h3>
+	</div>
+
+	<div class="md-padding">
+		<md-input-container class="md-block no-md-errors-spacer">
+			<label>Recherche : </label>
+			<input ng-model="searchText" placeholder="Tapez le nom de l'embout à rechercher"></input>
+		</md-input-container>
+	</div>
+
+	<div layout="row">
+		<div flex>
+			<md-list class="scrollable" style="height: 40px;border-bottom: 1px solid lightgrey;"> <!-- Pour le scrollable sur la liste, il faut limiter sa taille -->
+				<md-list-item style="border-bottom: 1px solid #ddd;" class="md-1-line" ng-repeat="item in $root.config.embouts | filter:searchText"  ng-click="ChangeEmboutSelectionne(item)">
+					<div flex layout="row">
+						<div layout="row" layout-align="center center" style="width:80px;">
+							<img ng-src="{{item.image}}" class="md-icon">
+						</div>
+						<div style="width:15px;"></div>
+						<div flex>
+							<label style="text-align:center">{{item.nom}} </label>
+							<!-- class="md-list-item-text" -->
+						</div>
+					</div>
+				</md-list-item>
+			</md-list>
+		</div>
+	</div>
+
+	<div flex layout="row" style="margin-top: 20px;" class="md-padding">
+
+		<div style="width:120px;height:70px;" class="selectionnableEmbout" ng-class="{'selectedEmbout' : modifiedEmbout == 'embout-gauche'}" layout="column" layout-align="center center"  ng-click="SelectionneEmbout('embout-gauche')">
+			<img  ng-src={{img_gauche}}>
+			<div>{{nom_gauche}}</div>
+		</div>
+		<div flex layout="column">
+			<div flex></div>
+			<hr/>
+			<div flex></div>
+		</div>
+		<div style="width:120px;height:70px;" class="selectionnableEmbout" ng-class="{'selectedEmbout' : modifiedEmbout == 'embout-droite'}" layout="column" layout-align="center center" ng-click="SelectionneEmbout('embout-droite')">
+			<img  ng-src={{img_droite}}>
+			<div>{{nom_droite}}</div>
+		</div>
+
+	</div>
+
+	<div layout="row" style="margin-top: 20px;">
+		<div flex></div>
+		<md-button ng-click="validate()" class="md-primary md-raised">
+			Valider
+		</md-button>
+		<div flex></div>
+	</div>
+
+</div>

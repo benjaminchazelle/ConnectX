@@ -1,0 +1,79 @@
+<md-content ng-controller="ProductDetailsController" class="md-padding" ng-show="object">
+
+	<h3 class="md-headline" style="text-align: center; margin: 0;" >
+		Détails de votre produit
+	</h3>
+
+	<div layout="row">
+
+		<div layout="row" flex="30">
+			<div style="width:100%">
+				<img style="width:100%;height:auto;" src="{{object.photo}}" />
+			</div>
+		</div>
+
+		<div flex="70" layout="column">
+			<div flex layout="column" class="md-padding">
+
+				<div><b>{{object.nom}}</b></div>
+				<div><i>Catégorie : {{object.type}}</i></div>
+				<div>Description : {{object.infos}}</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div>
+		Prêt {{object.statutType | lowercase}}
+		<span ng-if="object.prix != 0">
+			({{object.prix}}{{object.devise}}{{object.prixType}})
+		</span>
+	</div>
+
+	<md-list flex ng-repeat="demande in $root.data.demandes" ng-if="demande.idObjet == object.id">
+
+		<div>Prêt avec {{getUserById(demande.idDemandeur).nom}}</div>
+
+		<md-list-item class="md-2-line">
+			<md-icon md-svg-src="img/icons/call_received_white.svg" class="md-avatar-icon"></md-icon>
+
+			<div class="md-list-item-text">
+				<h3>Demande de prêt reçue</h3>
+				<p>{{$root.data.demandes[idDemande].dateDemande}} - {{$root.data.demandes[idDemande].heureDemande}}</p>
+			</div>
+
+		</md-list-item>
+
+		<md-list-item class="md-2-line" ng-if="$root.data.demandes[idDemande].statut == 'acceptée' || $root.data.demandes[idDemande].statut == 'terminée'">
+			<md-icon md-svg-src="img/icons/check_white.svg" class="md-avatar-icon"></md-icon>
+
+			<div class="md-list-item-text">
+				<h3>Demande de prêt acceptée</h3>
+				<p>{{$root.data.demandes[idDemande].dateDebut}} - {{$root.data.demandes[idDemande].heureDebut}}</p>
+			</div>
+
+		</md-list-item>
+
+		<md-list-item class="md-2-line" ng-if="$root.data.demandes[idDemande].statut == 'terminée'">
+			<md-icon md-svg-src="img/icons/end_white.svg" class="md-avatar-icon"></md-icon>
+
+			<div class="md-list-item-text">
+				<h3>Demande de prêt terminée</h3>
+				<p>{{$root.data.demandes[idDemande].dateFin}} - {{$root.data.demandes[idDemande].heureFin}}</p>
+			</div>
+
+		</md-list-item>
+
+		<md-list-item class="md-2-line" ng-if="$root.data.demandes[idDemande].statut == 'refusée'">
+			<md-icon md-svg-src="img/icons/close.svg" class="md-avatar-icon"></md-icon>
+
+			<div class="md-list-item-text">
+				<h3>Demande de prêt refusée</h3>
+				<p>{{$root.data.demandes[idDemande].dateFin}} - {{$root.data.demandes[idDemande].heureFin}}</p>
+			</div>
+
+		</md-list-item>	
+
+	</md-list>
+
+</md-content>

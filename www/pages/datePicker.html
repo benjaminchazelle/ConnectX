@@ -1,0 +1,37 @@
+<md-content ng-controller="DatePickerController" class="md-padding">
+
+	<h3 class="md-headline" style="text-align: center; margin: 0;" >
+		Choisissez votre période d'emprunt
+	</h3>
+
+	<div layout-gt-xs="row">
+		<div flex-gt-xs>
+			<h4>Date d'emprunt</h4>
+			<md-datepicker ng-model="start" md-placeholder="Enter date"></md-datepicker>
+		</div>
+
+		<div flex-gt-xs>
+			<h4>Date de rendu</h4>
+			<md-datepicker ng-model="end" md-min-date="start" md-placeholder="Enter date"></md-datepicker>
+		</div>
+	</div>
+
+	<div layout-gt-xs="row">
+		<div flex>
+			<h4>Durée de l'emprunt</h4>
+			<div class="md-padding">{{duration}} jours</div>
+		</div>
+
+	</div>
+
+	<br />
+
+	<div layout="row">
+		<div flex></div>
+		<md-button ng-click="validate()" ng-disabled="duration < 0" class="md-primary md-raised">
+			Valider
+		</md-button>
+		<div flex></div>
+	</div>
+
+</md-content>

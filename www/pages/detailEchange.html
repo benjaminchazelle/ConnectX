@@ -1,0 +1,132 @@
+<style>
+md-list-item.md-3-line::before, md-list-item.md-3-line > .md-no-style
+{
+	min-height: 30px;
+}
+.smallerFontSize
+{
+	font-size: 14px;
+}
+md-list-item.md-no-proxy, md-list-item .md-no-style
+{
+	padding: 10px;
+}
+</style>
+
+<div ng-controller="detailEchangeController" ng-cloak>
+	<md-content class="md-padding" layout-xs="column" layout="row" ng-if="isSpecial==0">
+		<div flex-xs flex-gt-xs="100" layout="column">
+
+			<div layout="row" layout-align="center center">
+				<div style="margin:0 5px 0 0;">
+					<md-icon md-svg-icon="{{$root.data.objets[$root.data.demandes[idDemande].idObjet].image || 'img/icons/ic_announcement.svg'}}" ></md-icon>
+				</div>
+				<h3>
+					{{$root.data.objets[$root.data.demandes[idDemande].idObjet].nom || $root.data.demandes[idDemande].nomObjet}}
+				</h3>
+			</div>
+
+			<div layout="row" layout-align="center center" ng-if="$root.data.demandes[idDemande].idObjet != null">
+				<img style="width:128px;height:auto;" ng-src="{{$root.data.objets[$root.data.demandes[idDemande].idObjet].photo}}" />
+				<div flex class="md-padding">
+					<div style="margin: 5px 0;"><b>Description</b> : {{$root.data.objets[$root.data.demandes[idDemande].idObjet].infos}}</div>
+					<div style="margin: 5px 0;" ng-if="$root.data.objets[$root.data.demandes[idDemande].idObjet].statutType == 'Gratuit'">
+						<b>Gratuit</b>
+					</div>
+					<div style="margin: 5px 0;" ng-if="$root.data.objets[$root.data.demandes[idDemande].idObjet].statutType == 'Payant'">
+						<b>Payant : </b>
+						{{$root.data.objets[$root.data.demandes[idDemande].idObjet].prix}}{{$root.data.objets[$root.data.demandes[idDemande].idObjet].devise}}{{$root.data.objets[$root.data.demandes[idDemande].idObjet].prixType}}
+					</div>
+					<div style="margin: 5px 0;"><b>Status</b> : demande {{$root.data.demandes[idDemande].statut}}</div>
+				</div>
+			</div>
+
+			<div layout="row" layout-align="center center" ng-if="$root.data.demandes[idDemande].idObjet == null">
+				<div style="margin: 5px 0;"><b>Status</b> : demande {{$root.data.demandes[idDemande].statut}}</div>
+			</div>
+
+			<md-content class="smallerFontSize" style="margin-left:10px;">
+
+
+				<div ng-if="getOther(idDemande).role == 'Demandeur'">
+					<div layout="row" layout-align="center center" style="margin-top:10px; margin-bottom:10px" ng-if="$root.data.demandes[idDemande].statut == 'en attente'">
+						<md-button ng-click="refuserDemande(idDemande)" class="md-raised" style="background-color:#e53935;color:white;width:120px;">
+							<md-icon md-svg-icon="img/icons/close_white.svg"></md-icon>
+							Refuser
+						</md-button>
+						<md-button ng-click="accepterDemande(idDemande)" class="md-raised" style="background-color:#43a047;color:white;width:120px;">
+							<md-icon md-svg-icon="img/icons/check_white.svg"></md-icon>
+							Accepter
+						</md-button>
+					</div>
+					<div layout="row" layout-align="center center" style="margin-top:10px; margin-bottom:10px" ng-if="$root.data.demandes[idDemande].statut == 'acceptée'">
+						<md-button ng-click="terminerDemande(idDemande)" class="md-raised md-primary" style="width:120px;">
+							<md-icon md-svg-icon="img/icons/check_white.svg"></md-icon>
+							Terminer
+						</md-button>
+					</div>
+				</div>
+
+			</md-content>
+			<md-content>
+				<md-divider></md-divider>
+				<div style="margin-top:10px;"><center><i>{{getOther(idDemande).role}}</i></center></div>
+				<div layout="row" style="margin-top:10px; margin-bottom:10px;" layout-align="start center">
+					<div flex="20" style="margin-right:10px;">
+						<img src="{{$root.data.profil[getOther(idDemande).id].avatar}}" class="md-avatar" style="margin-top:3px;border-radius: 64px;width:50px;height:50px;"/>
+					</div>
+					<div style="margin-right:10px;">
+						<div layout="column" class="smallerFontSize">
+							<div flex="33" class="one">{{$root.data.profil[getOther(idDemande).id].nom}}</div>
+							<div flex="33" class="one">{{calculateElapsedTime(idDemande)}}</div>
+							<div flex="33" class="one">{{$root.data.demandes[idDemande].distance}}</div>
+						</div>
+					</div>
+					<div flex="30" ng-click="openChat(idDemande)" style="margin-right:20px;" ng-if="$root.data.demandes[idDemande].statut != 'terminée' && $root.data.demandes[idDemande].statut != 'refusée'">
+						<div layout="row" style="margin-top:10px; margin-bottom:10px" layout-align="center center">
+							<div>
+								<md-button class="md-icon-button" aria-label="Chat" >
+									<md-icon md-svg-icon="img/icons/chat.svg" id="chatIcon"></md-icon>
+								</md-button>
+							</div>
+							<div>
+								<span id='chat'>Chat</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</md-content>
+			<md-content>
+				<md-divider></md-divider>
+				<div style="margin-top:10px; margin-bottom:10px;"><center><i>Historique</i></center></div>
+				<md-list style="padding:0">
+					<md-list-item class="md-3-line" style="min-height:20px; padding: 0;">
+						<div class="md-list-item-text">
+							<p>{{$root.data.demandes[idDemande].dateDemande}} - {{$root.data.demandes[idDemande].heureDemande}} : Demande de prêt reçue</p>
+						</div>
+					</md-list-item>
+
+					<md-list-item class="md-3-line" style="min-height:20px; padding: 0;" ng-if="$root.data.demandes[idDemande].statut == 'acceptée' || $root.data.demandes[idDemande].statut == 'terminée'">
+						<div class="md-list-item-text">
+							<p>{{$root.data.demandes[idDemande].dateDebut}} - {{$root.data.demandes[idDemande].heureDebut}} : Demande de prêt acceptée</p>
+						</div>
+					</md-list-item>
+
+					<md-list-item class="md-3-line" style="min-height:20px; padding: 0;" ng-if="$root.data.demandes[idDemande].statut == 'terminée'">
+						<div class="md-list-item-text">
+							<p>{{$root.data.demandes[idDemande].dateFin}} - {{$root.data.demandes[idDemande].heureFin}} : Demande de prêt terminée</p>
+						</div>
+					</md-list-item>
+
+					<md-list-item class="md-3-line" style="min-height:20px; padding: 0;" ng-if="$root.data.demandes[idDemande].statut == 'refusée'">
+						<div class="md-list-item-text">
+							<p>{{$root.data.demandes[idDemande].dateFin}} - {{$root.data.demandes[idDemande].heureFin}} : Demande de prêt refusée</p>
+						</div>
+					</md-list-item>
+				</md-list>
+			</md-content>
+		</div>
+	</md-content>
+
+</div>

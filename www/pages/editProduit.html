@@ -1,0 +1,83 @@
+<div ng-controller="editProduitController" class="md-padding" ng-cloak>
+
+	<h3 ng-if="idProduit >= 0" class="md-headline" style="text-align: center; margin: 0;" >
+		Éditer votre objet
+	</h3>
+
+	<h3 ng-if="idProduit == -1" class="md-headline" style="text-align: center; margin: 0;" >
+		Ajouter un objet
+	</h3>
+
+	<form name="editForm">
+
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>Catégorie</label>
+			<md-select ng-model="produit.type"> <!-- NOTE : ID produit est défini dans le $scope ;) -->
+				<md-option ng-repeat="item in $root.config.produit.categories" value="{{item}}">
+					{{item}}
+				</md-option>
+			</md-select>
+		</md-input-container>
+
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>Nom</label>
+			<input md-maxlength="30" maxlength="30" required md-no-asterisk name="nom" ng-model="produit.nom" placeholder="Nom de l'objet"> <!-- NOTE : ICI le [0] à modifier dynamiquement ! -->
+		</md-input-container>
+
+		<md-input-container class="md-block">
+			<label>Description</label>
+			<textarea ng-model="produit.infos" name="infos" md-maxlength="150" maxlength="150" rows="2" md-select-on-focus placeholder="Description de votre objet : caractéristiques, état, utilisations refusées, particularités ... "></textarea> <!-- NOTE : ICI le [0] à modifier dynamiquement ! -->
+		</md-input-container>
+
+		<md-input-container class="md-block" flex-gt-sm>
+			<label>Type de prêt</label>
+			<md-select ng-model="produit.statutType"> <!-- NOTE : ICI le [0] à modifier dynamiquement ! -->
+				<md-option ng-repeat="item in $root.config.produit.typePret" value="{{item}}">
+					{{item}}
+				</md-option>
+			</md-select>
+		</md-input-container>
+
+		<div layout="row" ng-if="produit.statutType=='Payant' || produit.statutType=='Caution'">
+
+			<md-input-container flex="70" class="md-block">
+				<label>Prix </label>
+				<input required type="number" step="any" name="prix" md-no-asterisk ng-model="produit.prix" min="0"
+				max="100" ng-pattern="/^[0-9]+([\.,][0-9]{1,2})?$/" />
+				<div style="font-size: 12px;color:grey;">100€ maximum</div>
+				<md-icon md-svg-src="img/icons/euro_symbol_black.svg" aria-label="Euro"> </md-icon>
+			</md-input-container>
+
+			<md-input-container class="md-block" flex="30">
+				<label>Délai</label>
+				<md-select ng-model="produit.prixType">
+					<md-option ng-repeat="item in $root.config.produit.typePrix" value="{{item}}" >
+						{{item}}
+					</md-option>
+				</md-select>
+			</md-input-container>
+
+		</div>
+
+		<div layout="row" flex>
+
+			<img name="imageProduit" <img ng-src="{{produit.image}}" style="margin-top:10px;border-radius: 35px;width:128px;height:128px;"  class="md-avatar">
+			<div flex="5"></div>
+			<div layout="column" flex>
+				<div flex></div>
+				<md-button style="margin:0;" class="md-raised md-secondary" onclick="browseFileSystem(this, 'chooseImage')" class="md-primary" arial-label="Change image">Changer l'image</md-button>
+				<div flex></div>
+			</div>
+		</div>
+
+		<div layout="row" style="margin-top: 20px;">
+			<div flex></div>
+			<md-button ng-click="submit()" class="md-primary md-raised" aria-label="Valider">
+				Valider
+			</md-button>
+			<div flex></div>
+		</div>
+
+	</form>
+
+</div>
